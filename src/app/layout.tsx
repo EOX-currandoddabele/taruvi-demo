@@ -12,6 +12,7 @@ import React, { Suspense } from "react";
 
 import { ColorModeContextProvider } from "@contexts/color-mode";
 import { dataProvider } from "@providers/data-provider";
+import { ReduxProvider } from "@providers/redux-provider";
 
 export const metadata: Metadata = {
   title: "Refine",
@@ -34,28 +35,30 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <Suspense>
-          <GitHubBanner />
-          <RefineKbarProvider>
-            <ColorModeContextProvider defaultMode={defaultMode}>
-              <RefineSnackbarProvider>
-                <DevtoolsProvider>
-                  <Refine
-                    routerProvider={routerProvider}
-                    dataProvider={dataProvider}
-                    notificationProvider={useNotificationProvider}
-                    options={{
-                      syncWithLocation: true,
-                      warnWhenUnsavedChanges: true,
-                      projectId: "nzGHTM-2YLGcK-DATdgN",
-                    }}
-                  >
-                    {children}
-                    <RefineKbar />
-                  </Refine>
-                </DevtoolsProvider>
-              </RefineSnackbarProvider>
-            </ColorModeContextProvider>
-          </RefineKbarProvider>
+          <ReduxProvider>
+            <GitHubBanner />
+            <RefineKbarProvider>
+              <ColorModeContextProvider defaultMode={defaultMode}>
+                <RefineSnackbarProvider>
+                  <DevtoolsProvider>
+                    <Refine
+                      routerProvider={routerProvider}
+                      dataProvider={dataProvider}
+                      notificationProvider={useNotificationProvider}
+                      options={{
+                        syncWithLocation: true,
+                        warnWhenUnsavedChanges: true,
+                        projectId: "nzGHTM-2YLGcK-DATdgN",
+                      }}
+                    >
+                      {children}
+                      <RefineKbar />
+                    </Refine>
+                  </DevtoolsProvider>
+                </RefineSnackbarProvider>
+              </ColorModeContextProvider>
+            </RefineKbarProvider>
+          </ReduxProvider>
         </Suspense>
       </body>
     </html>
